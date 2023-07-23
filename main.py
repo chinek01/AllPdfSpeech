@@ -7,3 +7,44 @@ Date: 2023-07-23
 Author: MC
 
 """
+
+
+from PyPDF2 import PdfReader
+from gtts import gTTS
+import os
+
+
+def read_PDF(path):
+
+    reader = PdfReader(path)
+    numer_of_pages = len(reader.pages)
+    page = reader.pages[0]
+    text = page.extract_text().replace('\n', ' ')
+
+    n_text = ''
+
+    for n in text:
+        n_text += n
+
+    return n_text
+
+
+def text_to_speech(text, language='en', output_file='output.mp3'):
+    try:
+        # Create a gTTS object with the text and language
+        tts = gTTS(text=text, lang=language, slow=False)
+
+        # Save the audio file
+        tts.save(output_file)
+        print(f"Text-to-speech conversion successful. Saved to {output_file}")
+
+        # Play the audio (optional)
+        # os.system(f"start {output_file}")  # For Windows
+        # os.system(f"xdg-open {output_file}")  # For Linux
+        os.system(f"open {output_file}")  # For macOS
+
+    except Exception as e:
+        print("Error occurred during text-to-speech conversion:", e)
+
+
+text_to_speech(read_PDF('sample_data/pdf_example.pdf'))
