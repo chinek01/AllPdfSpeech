@@ -1,2 +1,6 @@
 pypdf2==3.0.1
+google==3.0.0
 google-cloud==0.34.0
+beautifulsoup4==4.12.2
+wheel==0.38.4
+gTTS==2.3.2
